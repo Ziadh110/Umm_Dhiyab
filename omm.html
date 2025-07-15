@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أم-ذياب</title>
+    <style>
+        :root {
+            --primary-color: #2c5e1a;
+            --secondary-color: #4a8c2d;
+            --accent-color: #f0c14b;
+            --text-color: #f5f5f5;
+            --bg-color: #121f0d;
+            --card-color: #1a2e12;
+        }
+
+        [data-theme="light"] {
+            --primary-color: #6bbd4d;
+            --secondary-color: #8fd475;
+            --accent-color: #ff9900;
+            --text-color: #333;
+            --bg-color: #f0f7eb;
+            --card-color: #e0f0d9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            background-image: url('https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background-color: var(--accent-color);
+            color: #333;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .wolf {
+            position: absolute;
+            width: 60px;
+            height: 40px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60"><path d="M20,30 Q30,10 40,30 Q50,15 60,30 Q70,10 80,30" stroke="%23a67c52" fill="none" stroke-width="4"/><circle cx="30" cy="25" r="4" fill="%23f0c14b"/><circle cx="70" cy="25" r="4" fill="%23f0c14b"/><path d="M40,35 Q50,40 60,35" stroke="%23a67c52" fill="none" stroke-width="2"/></svg>');
+            background-repeat: no-repeat;
+            z-index: -1;
+            animation: run 20s linear infinite;
+            opacity: 0;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.7));
+        }
+
+        @keyframes run {
+            0% { 
+                transform: translateX(-100px) scaleX(-1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% { 
+                transform: translateX(calc(100vw + 100px)) scaleX(-1);
+                opacity: 0;
+            }
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            position: relative;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: var(--accent-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #333;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -50%; }
+            100% { left: 150%; }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        section {
+            padding: 50px 20px;
+            margin: 30px auto;
+            max-width: 1200px;
+            background-color: rgba(18, 31, 13, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--accent-color);
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        .about-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 3px solid var(--accent-color);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-text {
+            flex: 2;
+            min-width: 300px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .video-card {
+            background-color: var(--card-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(240, 193, 75, 0.1), transparent);
+            z-index: 0;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 15px;
+            position: relative;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .support-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .social-link {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            margin: 15px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, background-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+
+        .social-link:hover::after {
+            transform: translateX(100%);
+        }
+
+        .social-link:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .paypal-button {
+            display: inline-block;
+            background-color: #0070ba;
+            color: white;
+            padding: 12px 25px;
+            margin: 15px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .paypal-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+
+        .paypal-button:hover::after {
+            transform: translateX(100%);
+        }
+
+        .paypal-button:hover {
+            transform: scale(1.05);
+        }
+
+        .message-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: var(--card-color);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-form::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+
+        .message-form::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(240, 193, 75, 0.3);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background-color: var(--accent-color);
+            color: #333;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .submit-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+
+        .submit-button:hover::after {
+            transform: translateX(100%);
+        }
+
+        .lights {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.7);
+            animation: twinkle 2s infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        @media (max-width: 768px) {
+            .about-container {
+                flex-direction: column;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .wolf {
+                width: 40px;
+                height: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">🌓</button>
+
+    <!-- الذئاب المتحركة سيتم إضافتها عبر الجافاسكريبت -->
+
+    <header>
+        <h1 class="main-title">أم ذياب</h1>
+        <p>ملكة الغابة وسيدة الذئاب</p>
+        <a href="https://www.tiktok.com/@d_s2u?_t=ZS-8y3O5rYSK3e&_r=1" class="cta-button">اشترك الآن في قناتها على تيك توك</a>
+    </header>
+
+    <section id="about">
+        <h2 class="section-title">نبذة عن أم ذياب</h2>
+        <div class="about-container">
+            <div class="about-image">
+                <img src="assets/Picsart_25-07-15_22-27-29-057.jpg" alt="صورة أم ذياب">
+            </div>
+            <div class="about-text">
+               <h3> <p>أم ذياب شخصية محبوبة على التيك توك، بتفتح لايفات دايمًا وتنشر الخير والدعم لكل الناس، خاصة المصممين وحملات الخير</p>
+
+                <p>هي دايمًا بتكون مصدر طاقة إيجابية وبتقف جنب الكل بدون تمييز.</p>
+
+                <p>واختارت الذئب رمز ليها لأنه قوية، وفي نفس الوقت وافية مع اللي بيحبوها </p>
+            </h3>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="videos">
+        <h2 class="section-title">فيديوهات مميزة</h2>
+        <div class="videos-container">
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <iframe src="assets/video1.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title"> فيديو وصل أم ذياب لفل 48</h3>
+                    <p>تصميم لوصل أم ذياب لفل 48</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <iframe src="assets/video2.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">دعم أم ذياب للمصممين</h3>
+                    <p>تصميم لدعم أم ذياب للمصممين وافية من يومك</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <iframe src="assets/video3.mp4"frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">دعم أم ذياب لي اصحاب البثوث</h3>
+                    <p>مطنوخة أم ذياب الكل</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="support">
+        <h2 class="section-title">دعم مصمم الموقع</h2>
+        <div class="support-content">
+            <p>إذا أعجبك الموقع وترغب في دعم المصمم، يمكنك متابعته على تيك توك أو دعمي عبر باي بال</p>
+            <a href="https://www.tiktok.com/@z0_v1?_t=ZS-8y3QmelkQ4o&_r=1" class="social-link">تابع المصمم على تيك توك</a>
+            <a href="https://www.paypal.com/zeiadh839@gmali.com" class="paypal-button">ادعم عبر باي بال</a>
+            <p>لو قبلت مشكلة في التبرع ارسل لسه في حسابي التيك توك</p>
+        </div>
+    </section>
+
+    <section id="message">
+        <h2 class="section-title">رسالة إلى أم ذياب</h2>
+        <form class="message-form">
+            <div class="form-group">
+                <label for="name">اسمك</label>
+                <input type="text" id="name" placeholder="اكتب اسمك هنا">
+            </div>
+            <div class="form-group">
+                <label for="email">بريدك الإلكتروني (اختياري)</label>
+                <input type="email" id="email" placeholder="example@email.com">
+            </div>
+            <div class="form-group">
+                <label for="message">رسالتك</label>
+                <textarea id="message" placeholder="اكتب رسالتك لأم ذياب هنا..."></textarea>
+            </div>
+            <button type="submit" class="submit-button">إرسال الرسالة</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2025 موقع أم ذياب</p>
+    </footer>
+
+    <script>
+        // إنشاء الذئاب الصغيرة المتحركة مع تحسينات
+        function createWolves() {
+            const wolfCount = 6;
+            const delayIncrement = 3;
+            
+            for (let i = 0; i < wolfCount; i++) {
+                const wolf = document.createElement('div');
+                wolf.className = 'wolf';
+                
+                // توزيع الذئاب على ارتفاعات مختلفة
+                const topPosition = Math.random() * 80 + 10;
+                wolf.style.top = `${topPosition}%`;
+                
+                // سرعات مختلفة لكل ذئب
+                const duration = Math.random() * 10 + 15;
+                wolf.style.animationDuration = `${duration}s`;
+                
+                // تأخير مختلف لكل ذئب لتجنب التزامن
+                wolf.style.animationDelay = `${i * delayIncrement + Math.random() * 2}s`;
+                
+                // حجم عشوائي قليلاً
+                const size = Math.random() * 0.5 + 0.8;
+                wolf.style.transform = `scale(${size})`;
+                
+                document.body.appendChild(wolf);
+            }
+        }
+
+        // إنشاء الأضواء المتلألئة
+        function createLights() {
+            const lightCount = 20;
+            for (let i = 0; i < lightCount; i++) {
+                const light = document.createElement('div');
+                light.className = 'lights';
+                light.style.left = `${Math.random() * 100}%`;
+                light.style.top = `${Math.random() * 100}%`;
+                
+                // أحجام وألوان مختلفة
+                const size = Math.random() * 10 + 5;
+                light.style.width = `${size}px`;
+                light.style.height = `${size}px`;
+                
+                // ألوان مختلفة قليلاً
+                const hue = Math.random() * 30 + 30; // درجات اللون الأصفر
+                light.style.backgroundColor = `hsla(${hue}, 100%, 70%, 0.7)`;
+                
+                // سرعات ومدة مختلفة
+                light.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                light.style.animationDelay = `${Math.random() * 3}s`;
+                
+                document.body.appendChild(light);
+            }
+        }
+
+        // تبديل الوضع المظلم/الفاتح
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            
+            if (currentTheme === 'light') {
+                html.setAttribute('data-theme', 'dark');
+                this.textContent = '🌓';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                this.textContent = '🌒';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // تحميل النسق المحفوظ
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('themeToggle').textContent = savedTheme === 'light' ? '🌒' : '🌓';
+        }
+
+        // تأثيرات التمرير للفيديوهات
+        const videoCards = document.querySelectorAll('.video-card');
+        
+        function checkScroll() {
+            videoCards.forEach((card, index) => {
+                const cardTop = card.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (cardTop < windowHeight - 100) {
+                    // تأخير متدرج للحركة
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // تهيئة الفيديوهات
+        function initVideos() {
+            videoCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            });
+        }
+
+        // تهيئة الصفحة
+        window.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            createWolves();
+            createLights();
+            initVideos();
+            checkScroll();
+        });
+
+        window.addEventListener('scroll', checkScroll);
+    </script>
+</body>
+</html>
